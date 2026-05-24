@@ -44,9 +44,11 @@ class Project extends Model
     }
 
  #[Scope]
-protected static function active(Builder $query): void
+protected function active(Builder $query): void
  {
         $query->has('tasks');
  }
+
+
 
 }
