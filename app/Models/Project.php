@@ -2,7 +2,9 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Attributes\Scope;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 
@@ -40,4 +42,11 @@ class Project extends Model
             $project->slug = Str::slug($project->name);
         });
     }
+
+ #[Scope]
+protected static function active(Builder $query): void
+ {
+        $query->has('tasks');
+ }
+
 }
