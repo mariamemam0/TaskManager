@@ -12,7 +12,7 @@ class TaskController extends Controller
      */
     public function index()
     {
-        dd(Task::recent()->first());
+
     }
 
     /**

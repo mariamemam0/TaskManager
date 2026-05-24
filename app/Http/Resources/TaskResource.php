@@ -16,13 +16,13 @@ class TaskResource extends JsonResource
     {
           return [
               'id'=> $this->id,
-              'project'=>new ProjectResource($this->project),
               'title'=> $this->title,
               'slug'=>$this->slug,
               'status'=> $this->status,
               'description'=> $this->description,
               'started_at'=>$this->started_at,
-              'ended_at'=> $this->ended_at
+              'ended_at'=> $this->ended_at,
+
           ];
     }
 }

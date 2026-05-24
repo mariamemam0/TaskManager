@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\ProjectCollection;
 use App\Models\Project;
 use Illuminate\Http\Request;
 
@@ -12,7 +13,13 @@ class ProjectController extends Controller
      */
     public function index()
     {
-        dd(Project::active()->get());
+          $projects = Project::select('id','name','description','user_id','slug')->with('user','tasks')
+              ->paginate($this->paginate);
+          if($projects->isEmpty()){
+              return apiResponse(404,'projects not found');
+    }
+          return apiResponse(200,'success',new ProjectCollection($projects));
+
     }
 
     /**
