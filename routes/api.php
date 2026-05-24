@@ -9,3 +9,4 @@ Route::get('/user', function (Request $request) {
 
 
 Route::apiResource('projects',\App\Http\Controllers\ProjectController::class);
+Route::apiResource('tasks',\App\Http\Controllers\TaskController::class);

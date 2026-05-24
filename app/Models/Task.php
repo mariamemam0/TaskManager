@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Attributes\Scope;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
@@ -39,4 +41,10 @@ class Task extends Model
         });
     }
 
+
+    #[Scope]
+    protected function recent(Builder $query): void
+    {
+        $query->latest('id');
+    }
 }
