@@ -28,7 +28,7 @@ class Project extends Model
         return $this->hasMany(Task::class);
     }
 
-    protected static function booted()
+    protected static function boot()
     {
         parent::boot();
 
