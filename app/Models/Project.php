@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 class Project extends Model
 {
@@ -25,5 +26,18 @@ class Project extends Model
     public function tasks()
     {
         return $this->hasMany(Task::class);
+    }
+
+    protected static function booted()
+    {
+        parent::boot();
+
+        static::creating(function ($project) {
+            $project->slug = Str::slug($project->name);
+        });
+
+        static::updating(function ($project) {
+            $project->slug = Str::slug($project->name);
+        });
     }
 }
