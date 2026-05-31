@@ -12,7 +12,7 @@ class ProjectRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -30,6 +30,7 @@ class ProjectRequest extends FormRequest
         }
 
         return [
+            'user_id' => 'required|exists:users,id',
             'name'        => 'required|string|max:255',
             'description' => 'nullable|string',
         ];
