@@ -15,6 +15,7 @@ class ProjectController extends Controller
      */
     public function index()
     {
+      //  dd(Project::active()->get());
           $projects = Project::select('id','name','description','user_id','slug')->with('user','tasks')
               ->paginate($this->paginate);
           if($projects->isEmpty()){
