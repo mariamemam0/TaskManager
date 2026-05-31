@@ -90,6 +90,6 @@ php artisan serve
 
 ## Built With
 
-- [Laravel 12](https://laravel.com)
+- [Laravel 13](https://laravel.com)
 - [MySQL](https://www.mysql.com)
 - [PHP 8.4](https://www.php.net)
