@@ -16,7 +16,7 @@ class ProjectResource extends JsonResource
     {
         return [
             'id'=> $this->id,
-            'user'=> new UserResource($this->user),
+            //'user'=> new UserResource($this->user),
             'name'=> $this->name,
             'slug'=>$this->slug,
             'description'=> $this->description,
