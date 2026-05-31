@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ProjectRequest;
 use App\Http\Resources\ProjectCollection;
+use App\Http\Resources\ProjectResource;
 use App\Models\Project;
 use Illuminate\Http\Request;
 
@@ -22,20 +24,17 @@ class ProjectController extends Controller
 
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
+
+
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(ProjectRequest $request)
     {
-        //
+        $data = $request->validated();
+        $project = Project::create($data);
+        return apiResponse(201 ,'Success',new ProjectResource($project));
     }
 
     /**
@@ -43,23 +42,17 @@ class ProjectController extends Controller
      */
     public function show(Project $project)
     {
-        //
+        return apiResponse(200,'success',new ProjectResource($project));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Project $project)
-    {
-        //
-    }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Project $project)
+    public function update(ProjectRequest $request, Project $project)
     {
-        //
+        $project->update($request->validated());
+        return apiResponse(200,'success',new ProjectResource($project));
     }
 
     /**
@@ -67,6 +60,7 @@ class ProjectController extends Controller
      */
     public function destroy(Project $project)
     {
-        //
+        $project->delete();
+        return apiResponse(200,'Project deleted');
     }
 }
