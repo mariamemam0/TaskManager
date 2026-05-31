@@ -9,7 +9,7 @@ A RESTful API built with Laravel for managing projects and tasks.
 - PHP >= 8.4
 - Composer
 - MySQL
-- Laravel 12
+- Laravel 13
 
 ---
 
