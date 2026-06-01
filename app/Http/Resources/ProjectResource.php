@@ -21,6 +21,8 @@ class ProjectResource extends JsonResource
             'slug'=>$this->slug,
             'description'=> $this->description,
             'tasks'=> TaskResource::collection($this->tasks),
+            'comments'    => CommentResource::collection($this->whenLoaded('comments')),
+
         ];
     }
 }

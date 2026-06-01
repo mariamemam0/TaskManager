@@ -43,6 +43,8 @@ class ProjectController extends Controller
      */
     public function show(Project $project)
     {
+        $project->load('comments');
+
         return apiResponse(200,'success',new ProjectResource($project));
     }
 
