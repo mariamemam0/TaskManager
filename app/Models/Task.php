@@ -47,4 +47,9 @@ class Task extends Model
     {
         $query->latest('id');
     }
+
+    public function comments()
+    {
+        return $this->morphMany(Comment::class, 'commentable');
+    }
 }
