@@ -12,3 +12,10 @@ Route::apiResource('projects',\App\Http\Controllers\ProjectController::class);
 Route::apiResource('tasks',\App\Http\Controllers\TaskController::class);
 
 Route::apiResource('users',\App\Http\Controllers\UserController::class);
+
+Route::prefix('{type}/{id}/comments')->group(function () {
+    Route::get('/',            [\App\Http\Controllers\CommentController::class, 'index']);
+    Route::post('/',           [\App\Http\Controllers\CommentController::class, 'store']);
+    Route::put('/{comment}',   [\App\Http\Controllers\CommentController::class, 'update']);
+    Route::delete('/{comment}',[\App\Http\Controllers\CommentController::class, 'destroy']);
+});
