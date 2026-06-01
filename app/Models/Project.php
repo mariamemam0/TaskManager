@@ -50,6 +50,12 @@ protected function active(Builder $query): void
         $query->has('tasks');
  }
 
+ public function comments()
+ {
+     return $this->morphMany(Comment::class, 'commentable');
+ }
+
+
 
 
 }
