@@ -23,6 +23,7 @@ class TaskResource extends JsonResource
               'description'=> $this->description,
               'started_at'=>$this->started_at,
               'ended_at'=> $this->ended_at,
+              'comments'    => CommentResource::collection($this->whenLoaded('comments')),
 
           ];
     }
