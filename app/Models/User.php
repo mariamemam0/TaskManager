@@ -43,4 +43,10 @@ class User extends Authenticatable
             get: fn(string $value) => ucfirst($value),
         );
     }
+
+
+    public function tokens()
+    {
+        return $this->hasMany(Token::class);
+    }
 }
