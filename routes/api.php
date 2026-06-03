@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Route;
 //})->middleware('auth:sanctum');
 
 
-Route::apiResource('projects',\App\Http\Controllers\ProjectController::class);
+//Route::apiResource('projects',\App\Http\Controllers\ProjectController::class);
 Route::apiResource('tasks',\App\Http\Controllers\TaskController::class);
 
 Route::apiResource('users',\App\Http\Controllers\UserController::class);
@@ -18,4 +18,13 @@ Route::prefix('{type}/{id}/comments')->group(function () {
     Route::post('/',           [\App\Http\Controllers\CommentController::class, 'store']);
     Route::put('/{comment}',   [\App\Http\Controllers\CommentController::class, 'update']);
     Route::delete('/{comment}',[\App\Http\Controllers\CommentController::class, 'destroy']);
+});
+
+
+Route::post('register',[\App\Http\Controllers\AuthController::class,'register']);
+Route::post('login',[\App\Http\Controllers\AuthController::class,'login']);
+
+Route::middleware('auth.manual')->group(function () {
+    Route::post('/logout',   [\App\Http\Controllers\AuthController::class, 'logout']);
+    Route::apiResource('projects', \App\Http\Controllers\ProjectController::class);
 });
