@@ -79,6 +79,7 @@ php artisan serve
 ## Features
 
 - ✅ CRUD for Users, Projects and Tasks
+- ✅ Authentication
 - ✅ Slug auto generation
 - ✅ Soft Deletes for Projects and Tasks
 - ✅ Request Validation
