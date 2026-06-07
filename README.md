@@ -82,6 +82,7 @@ php artisan serve
 - ✅ Authentication
 - ✅ Slug auto generation
 - ✅ Soft Deletes for Projects and Tasks
+- ✅ Priority for Tasks
 - ✅ Request Validation
 - ✅ API Resources and Collections
 - ✅ Pagination
