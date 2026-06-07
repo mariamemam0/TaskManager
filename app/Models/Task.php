@@ -19,6 +19,7 @@ class Task extends Model
         'slug',
         'description',
         'status',
+        'priority',
         'started_at',
         'ended_at',
     ];
@@ -51,5 +52,25 @@ class Task extends Model
     public function comments()
     {
         return $this->morphMany(Comment::class, 'commentable');
+    }
+
+    #[Scope]
+    protected function highPriority(Builder $query): void
+    {
+        $query->where('priority', 'high');
+    }
+
+
+    #[Scope]
+    protected function mediumPriority(Builder $query): void
+       {
+            $query->where('priority', 'medium');
+       }
+
+
+    #[Scope]
+    protected function lowPriority(Builder $query): void
+    {
+        $query->where('priority', 'high');
     }
 }
