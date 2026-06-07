@@ -27,6 +27,7 @@ class TaskRequest extends FormRequest
                 'title'       => 'sometimes|required|string|max:255',
                 'description' => 'sometimes|nullable|string',
                 'status'      => 'sometimes|required|in:pending,in_progress,completed',
+                'Priority'    => 'sometimes|nullable|in:low,medium,high',
                 'started_at'  => 'sometimes|nullable|date',
                 'ended_at'    => 'sometimes|nullable|date|after:started_at',
             ];
@@ -37,6 +38,7 @@ class TaskRequest extends FormRequest
             'title'       => 'required|string|max:255',
             'description' => 'nullable|string',
             'status'      => 'nullable|in:pending,in_progress,completed',
+            'Priority'    => 'nullable|in:low,medium,high',
             'started_at'  => 'nullable|date',
             'ended_at'    => 'nullable|date|after:started_at',
         ];

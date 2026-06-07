@@ -20,6 +20,7 @@ class TaskResource extends JsonResource
               'title'=> $this->title,
               'slug'=>$this->slug,
               'status'=> $this->status,
+              'priority'=>$this->priority,
               'description'=> $this->description,
               'started_at'=>$this->started_at,
               'ended_at'=> $this->ended_at,
