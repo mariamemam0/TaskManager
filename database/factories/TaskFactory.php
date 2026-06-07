@@ -26,6 +26,7 @@ class TaskFactory extends Factory
             'slug'=> Str::slug($title),
             'description' => fake()->paragraph(),
             'status'=> fake()->randomElement(['pending','in_progress','completed']),
+            'priority'=>fake()->randomElement(['low','medium','high']),
             'started_at'=> fake()->dateTime(),
             'ended_at'=> fake()->dateTime(),
 
