@@ -7,6 +7,7 @@ use App\Http\Requests\RegisterRequest;
 use App\Models\Token;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
@@ -16,23 +17,25 @@ class AuthController extends Controller
     {
         $data = $request->validated();
         $data['email_verified_at'] = now();
-        $user = User::create($data);
-       //$token = Str::random(64);
-//       Token::create([
-//           'user_id' => $user->id,
-//           'token' => $token,
-//       ]);
-           //use sanctum
-        $token = $user->createToken('auth_token')->plainTextToken;
+        $user = User::create([
+            'name' => $data['name'],
+            'email' => $data['email'],
+            'password' => Hash::make($data['password']),
+        ]);
+        $token = Auth::login($user);
 
 
-       return apiResponse(201,'Register successfully',[
+
+        return apiResponse(201,'Register successfully',[
            'user'  => [
                'id'    => $user->id,
                'name'  => $user->name,
                'email' => $user->email,
            ],
-           'token' => $token,
+            'authorisation' => [
+                'token' => $token,
+                'type' => 'bearer',
+            ]
        ]);
 
     }
@@ -40,89 +43,52 @@ class AuthController extends Controller
 
     public function login(LoginRequest $request)
     {
-        $data = $request->validated();
-        $user = User::where('email', $data['email'])->first();
-        if (!$user || !Hash::check($data['password'], $user->password)) {
-            return apiResponse(401,'Invalid credentials');
+        $credentials = $request->validated();
+        $token = Auth::guard('api')->attempt($credentials);
+        if (!$token) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Unauthorized',
+            ], 401);
         }
-//        $token = Str::random(64);
-//
-//        Token::create([
-//            'user_id' => $user->id,
-//            'token' => $token,
-//        ]);
+        $user = Auth::user();
 
-        $token = $user->createToken('auth_token')->plainTextToken;
+
         return apiResponse(200,'Login successfully',[
             'user'  => [
-                'id'    => $user->id,
                 'name'  => $user->name,
                 'email' => $user->email,
             ],
-            'token' => $token,
+            'authorisation' => [
+                'token' => $token,
+                'type' => 'bearer',
+            ]
         ]);
     }
 
 
     public function logout(Request $request)
     {
-//        Token::where('token', $request->bearerToken())->delete();
-
-        $request->user()->currentAccessToken()->delete();
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        Auth::logout();
         return apiResponse(200, 'Logout successfully');
+    }
+
+    public function refresh()
+    {
+        return apiResponse(200, 'Refresh successfully', [
+            'authorisation' => [
+                'token' => Auth::guard('api')->refresh(),
+                'type'  => 'bearer',
+            ]
+        ]);
+    }
+
+
+    public function me()
+    {
+          $user = Auth::user();
+          return apiResponse(200, $user);
+
     }
 
 }
