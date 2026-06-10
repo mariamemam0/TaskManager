@@ -86,6 +86,7 @@ php artisan serve
 - ✅ Request Validation
 - ✅ API Resources and Collections
 - ✅ Pagination
+- ✅search & filter 
 - ✅ Standardized API Responses
 
 ---
