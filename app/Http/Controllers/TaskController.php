@@ -21,7 +21,11 @@ class TaskController extends Controller
             ->when($request->filled('status'),fn($q) => $q->where('status',$request->status))
             ->when($request->filled('priority'),fn($q) => $q->where('priority',$request->priority))
 
-
+            //search
+            ->when($request->filled('search'),fn($q) => $q->where(function($q) use ($request){
+                  $q->where('title','like','%'.$request->search.'%')
+                      ->orWhere('description','like','%'.$request->search.'%');
+            }))
             ->paginate($this->paginate);
         if ($tasks->isEmpty()) {
             return apiResponse(404, 'task not found');
