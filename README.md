@@ -126,15 +126,16 @@ GET /api/tasks?status=pending&priority=high&search=fix
 
 ## Features
 
-- ✅ CRUD for Users, Projects and Tasks
+- ✅ CRUD for Users, Projects, Tasks and Comments
 - ✅ JWT Authentication
+- ✅ Search & Filter for Tasks
 - ✅ Slug auto generation
 - ✅ Soft Deletes for Projects and Tasks
-- ✅ Priority for Tasks
+- ✅ Polymorphic Comments
+- ✅ Priority levels for Tasks (low, medium, high)
 - ✅ Request Validation
 - ✅ API Resources and Collections
 - ✅ Pagination
-- ✅search & filter 
 - ✅ Standardized API Responses
 
 ---
