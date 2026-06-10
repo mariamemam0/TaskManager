@@ -74,6 +74,54 @@ php artisan serve
 | PUT | `/api/tasks/{id}` | Update a task |
 | DELETE | `/api/tasks/{id}` | Delete a task |
 
+
+### Comments
+ 
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | `/api/comments` | Get all comments |
+| POST | `/api/comments` | Create a comment |
+| GET | `/api/comments/{id}` | Get a comment |
+| PUT | `/api/comments/{id}` | Update a comment |
+| DELETE | `/api/comments/{id}` | Delete a comment |
+ 
+---
+ 
+## Search & Filter
+ 
+The tasks endpoint supports search and filter via query parameters.
+ 
+### Filter by status
+ 
+```
+GET /api/tasks?status=pending
+GET /api/tasks?status=in_progress
+GET /api/tasks?status=completed
+```
+ 
+### Filter by priority
+ 
+```
+GET /api/tasks?priority=low
+GET /api/tasks?priority=medium
+GET /api/tasks?priority=high
+```
+ 
+### Search by keyword
+ 
+Searches inside `title` and `description`:
+ 
+```
+GET /api/tasks?search=bug
+```
+ 
+### Combine filters
+ 
+```
+GET /api/tasks?status=pending&priority=high
+GET /api/tasks?status=pending&search=bug
+GET /api/tasks?status=pending&priority=high&search=fix
+```
 ---
 
 ## Features
@@ -96,3 +144,5 @@ php artisan serve
 - [Laravel 13](https://laravel.com)
 - [MySQL](https://www.mysql.com)
 - [PHP 8.4](https://www.php.net)
+- [php-open-source-saver/jwt-auth](https://github.com/PHP-Open-Source-Saver/jwt-auth)
+ 
