@@ -19,6 +19,8 @@ class TaskController extends Controller
             //filter
             ->select('id', 'title', 'description', 'status','priority', 'slug','started_at','ended_at')
             ->when($request->filled('status'),fn($q) => $q->where('status',$request->status))
+            ->when($request->filled('priority'),fn($q) => $q->where('priority',$request->priority))
+
 
             ->paginate($this->paginate);
         if ($tasks->isEmpty()) {
