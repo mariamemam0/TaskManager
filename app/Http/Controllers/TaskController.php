@@ -13,9 +13,13 @@ class TaskController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $tasks = Task::select('id', 'title', 'description', 'status', 'slug','started_at','ended_at')
+        $tasks = Task::query()
+            //filter
+            ->select('id', 'title', 'description', 'status','priority', 'slug','started_at','ended_at')
+            ->when($request->filled('status'),fn($q) => $q->where('status',$request->status))
+
             ->paginate($this->paginate);
         if ($tasks->isEmpty()) {
             return apiResponse(404, 'task not found');
