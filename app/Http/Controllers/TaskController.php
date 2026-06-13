@@ -63,6 +63,18 @@ class TaskController extends Controller
         return apiResponse(200, 'success', new TaskResource($task));
     }
 
+
+    public function assign(Request $request, Task $task)
+    {
+        $request->validate([
+            'user_id' => 'required|exists:users,id'
+        ]);
+
+        $task->update([
+            'user_id' => $request->user_id
+        ]);
+        return apiResponse(200, 'success', new TaskResource($task));
+    }
     /**
      * Remove the specified resource from storage.
      */
