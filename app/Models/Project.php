@@ -17,13 +17,12 @@ class Project extends Model
     protected $fillable = [
         'name',
         'description',
-        'user_id',
         'slug',
     ];
 
-    public function user()
+    public function users()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsToMany(User::class, 'project_user');
     }
 
     public function tasks()
