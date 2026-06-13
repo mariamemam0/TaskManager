@@ -21,7 +21,6 @@ class ProjectFactory extends Factory
     {
         $name = fake()->sentence(3);
         return [
-            'user_id' => User::factory(),
             'name' => $name,
             'slug' => Str::slug($name),
             'description' => fake()->paragraph(),
