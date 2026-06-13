@@ -69,11 +69,16 @@ class TaskController extends Controller
         $request->validate([
             'user_id' => 'required|exists:users,id'
         ]);
+        $usersBelongToProject = $task->project->users()->where('users.id', $request->user_id)->exists();
 
+        if (!$usersBelongToProject) {
+            return apiResponse(402, 'User does not belong to this project');
+        }
         $task->update([
             'user_id' => $request->user_id
         ]);
-        return apiResponse(200, 'success', new TaskResource($task));
+
+        return apiResponse(200, 'User assign successfully', new TaskResource($task));
     }
     /**
      * Remove the specified resource from storage.
