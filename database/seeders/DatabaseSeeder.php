@@ -17,14 +17,16 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
+        $users = User::factory(5)->create();
 
-        User::factory(5)
-        ->has(
-            Project::factory(3)
-            ->has(Task::factory(5)
-            )
-        )
-            ->create();
+        $users->each(function ($user) {
+            $projects = Project::factory(3)
+                ->has(Task::factory(5))
+                ->create();
+
+            $projects->each(function ($project) use ($user) {
+                $project->users()->attach($user->id);
+            });
+        });
     }
 }
