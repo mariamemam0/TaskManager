@@ -35,6 +35,8 @@ class ProjectController extends Controller
     {
         $data = $request->validated();
         $project = Project::create($data);
+        $project->users()->attach(auth()->id());
+
         return apiResponse(201 ,'Success',new ProjectResource($project));
     }
 
