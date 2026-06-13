@@ -137,6 +137,8 @@ GET /api/tasks?status=pending&priority=high&search=fix
 - ✅ API Resources and Collections
 - ✅ Pagination
 - ✅ Standardized API Responses
+- ✅ Task Assignment to Users
+- ✅ Project-Based Task Assignment Validation
 
 ---
 
