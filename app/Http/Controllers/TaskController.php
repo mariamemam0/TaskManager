@@ -67,13 +67,16 @@ class TaskController extends Controller
     public function assign(Request $request, Task $task)
     {
         $request->validate([
-            'user_id' => 'required|exists:users,id'
+            'user_id' => 'nullable|exists:users,id'
         ]);
-        $usersBelongToProject = $task->project->users()->where('users.id', $request->user_id)->exists();
+        if ($request->user_id !== null) {
+            $userBelongsToProject = $task->project->users()->where('users.id', $request->user_id)->exists();
 
-        if (!$usersBelongToProject) {
-            return apiResponse(402, 'User does not belong to this project');
+            if (!$userBelongsToProject) {
+                return apiResponse(422, 'User does not belong to this project');
+            }
         }
+
         $task->update([
             'user_id' => $request->user_id
         ]);
