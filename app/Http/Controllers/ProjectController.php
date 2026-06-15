@@ -7,6 +7,7 @@ use App\Http\Resources\ProjectCollection;
 use App\Http\Resources\ProjectResource;
 use App\Models\Project;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ProjectController extends Controller
 {
@@ -16,7 +17,7 @@ class ProjectController extends Controller
     public function index()
     {
       //  dd(Project::active()->get());
-          $projects = Project::select('id','name','description','user_id','slug')->with('user','tasks')
+          $projects = Project::select('id','name','description','slug')->with('users','tasks')
               ->paginate($this->paginate);
           if($projects->isEmpty()){
               return apiResponse(404,'projects not found');
@@ -34,8 +35,12 @@ class ProjectController extends Controller
     public function store(ProjectRequest $request)
     {
         $data = $request->validated();
-        $project = Project::create($data);
-        $project->users()->attach(auth()->id());
+        $project = DB::transaction(function () use ($data) {
+            $project = Project::create($data);
+            $project->users()->attach(auth()->id());
+            return $project;
+        });
+
 
         return apiResponse(201 ,'Success',new ProjectResource($project));
     }
