@@ -8,6 +8,7 @@ use App\Http\Resources\ProjectResource;
 use App\Models\Project;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Gate;
 
 class ProjectController extends Controller
 {
@@ -17,6 +18,8 @@ class ProjectController extends Controller
     public function index()
     {
       //  dd(Project::active()->get());
+
+        Gate::authorize('admin');
           $projects = Project::select('id','name','description','slug')->with('users','tasks')
               ->paginate($this->paginate);
           if($projects->isEmpty()){
