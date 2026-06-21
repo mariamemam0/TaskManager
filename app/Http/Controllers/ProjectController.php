@@ -37,6 +37,7 @@ class ProjectController extends Controller
      */
     public function store(ProjectRequest $request)
     {
+        $this->authorize('create',Project::class);
         $data = $request->validated();
         $project = DB::transaction(function () use ($data) {
             $project = Project::create($data);
@@ -53,6 +54,7 @@ class ProjectController extends Controller
      */
     public function show(Project $project)
     {
+        $this->autherize('view',$project);
         $project->load('comments');
 
         return apiResponse(200,'success',new ProjectResource($project));
@@ -64,6 +66,8 @@ class ProjectController extends Controller
      */
     public function update(ProjectRequest $request, Project $project)
     {
+        $this->authorize('update', $project); // only project members
+
         $project->update($request->validated());
         return apiResponse(200,'success',new ProjectResource($project));
     }
@@ -73,6 +77,7 @@ class ProjectController extends Controller
      */
     public function destroy(Project $project)
     {
+        $this->authorize('delete', $project);
         $project->delete();
         return apiResponse(200,'Project deleted');
     }
