@@ -7,6 +7,7 @@ use App\Http\Resources\TaskCollection;
 use App\Http\Resources\TaskResource;
 use App\Models\Task;
 use Illuminate\Http\Request;
+use Spatie\QueryBuilder\QueryBuilder;
 
 class TaskController extends Controller
 {
@@ -15,18 +16,10 @@ class TaskController extends Controller
      */
     public function index(Request $request)
     {
-        $tasks = Task::query()
-            //filter
-            ->select('id', 'title', 'description', 'status','priority', 'slug','started_at','ended_at')
-            ->when($request->filled('status'),fn($q) => $q->where('status',$request->status))
-            ->when($request->filled('priority'),fn($q) => $q->where('priority',$request->priority))
+        $tasks =  QueryBuilder::for(Task::class)
+            ->allowedFilters('status', 'priority ')
+            ->get();
 
-            //search
-            ->when($request->filled('search'),fn($q) => $q->where(function($q) use ($request){
-                  $q->where('title','like','%'.$request->search.'%')
-                      ->orWhere('description','like','%'.$request->search.'%');
-            }))
-            ->paginate($this->paginate);
         if ($tasks->isEmpty()) {
             return apiResponse(404, 'task not found');
         }

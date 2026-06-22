@@ -13,7 +13,8 @@
         "laravel/framework": "^13.8",
         "laravel/sanctum": "*",
         "laravel/tinker": "^3.0",
-        "php-open-source-saver/jwt-auth": "*"
+        "php-open-source-saver/jwt-auth": "*",
+        "spatie/laravel-query-builder": "*"
     },
     "require-dev": {
         "fakerphp/faker": "^1.23",
