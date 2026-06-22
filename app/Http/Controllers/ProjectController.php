@@ -7,6 +7,7 @@ use App\Http\Resources\ProjectCollection;
 use App\Http\Resources\ProjectResource;
 use App\Models\Project;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 
@@ -20,8 +21,11 @@ class ProjectController extends Controller
       //  dd(Project::active()->get());
 
         Gate::authorize('admin');
-          $projects = Project::select('id','name','description','slug')->with('users','tasks')
-              ->paginate($this->paginate);
+        $projects = Cache::remember('projects', 3600, function () {
+            return Project::select('id', 'name', 'description', 'slug')
+                ->with('users', 'tasks')
+                ->paginate($this->paginate);
+        });
           if($projects->isEmpty()){
               return apiResponse(404,'projects not found');
     }
