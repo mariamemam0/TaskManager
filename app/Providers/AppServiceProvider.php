@@ -30,6 +30,6 @@ class AppServiceProvider extends ServiceProvider
             return Limit::perMinute(5)->by($key);
         });
 
-        Gate::define('admin',fn( User $user)=> $user->is_admin);
+        Gate::define('admin',fn( User $user)=> $user->hasRole('admin'));
     }
 }
