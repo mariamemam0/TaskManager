@@ -41,8 +41,9 @@ class ProjectController extends Controller
      */
     public function store(ProjectRequest $request)
     {
-        $this->authorize('create',Project::class);
-        $data = $request->validated();
+        if (!auth()->user()->hasPermissionTo('create project')) {
+            return apiResponse(403, 'You do not have permission to create a project');
+        }        $data = $request->validated();
         $project = DB::transaction(function () use ($data) {
             $project = Project::create($data);
             $project->users()->attach(auth()->id());
